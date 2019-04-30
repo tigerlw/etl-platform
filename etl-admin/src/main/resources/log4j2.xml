@@ -49,11 +49,13 @@
 			<AppenderRef ref="msg" /> 
 		</logger>
 		
-		<logger name="org.springframework" additivity="false" level="ERROR">
+		<logger name="org.springframework" additivity="false" level="DEBUG">
 			<AppenderRef ref="App" />
+			<AppenderRef ref="STDOUT" />
 		</logger>
-		<root level="ERROR">
+		<root level="DEBUG">
 			<AppenderRef ref="App" />
+			<AppenderRef ref="STDOUT" />
 
 		</root>
 	</loggers>
