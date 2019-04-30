@@ -1,5 +1,7 @@
 package com.dap.etl.admin.domain.model.datasource;
 
+import java.util.List;
+
 import com.dap.etl.admin.domain.inf.service.MySqlConnVO;
 import com.dap.etl.admin.domain.inf.service.MySqlConnection;
 
@@ -24,6 +26,8 @@ public class MySqlDataSource
 	private String pwd;
 	
 	private MySqlConnection connection;
+	
+	private List<TableSchemaVO> tables;
 	
 	public MySqlDataSource()
 	{
@@ -57,6 +61,26 @@ public class MySqlDataSource
 		connVO.setPwd(pwd);
 		
 		return connection.testConnection(connVO);
+	}
+	
+	/**
+	 * 获取tables 列表
+	 * @return
+	 */
+	
+	public List<TableSchemaVO> getTableList()
+	{
+		MySqlConnVO connVO = new MySqlConnVO();
+		
+		connVO.setIp(ip);
+		connVO.setPort(port);
+		connVO.setDataBase(dataBase);
+		connVO.setUserName(userName);
+		connVO.setPwd(pwd);
+		
+		this.tables = connection.getTableList(connVO);
+		
+		return this.tables;
 	}
 
 	public String getIp() {
@@ -113,6 +137,14 @@ public class MySqlDataSource
 
 	public void setConnection(MySqlConnection connection) {
 		this.connection = connection;
+	}
+
+	public List<TableSchemaVO> getTables() {
+		return tables;
+	}
+
+	public void setTables(List<TableSchemaVO> tables) {
+		this.tables = tables;
 	}
 	
 

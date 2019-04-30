@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appenders>
+		<Console name="STDOUT" target="SYSTEM_OUT">
+			<PatternLayout pattern="%d %p [%t] %c %L %M - %msg%xEx%n" />
+		</Console>
+		<!-- 根据自己的需求自定义本地打印日志文件 -->
+		<RollingRandomAccessFile name="App" fileName="logs/log.log"
+			filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+			<PatternLayout>
+				<Pattern>%d %p [%t] %c %L %M - %msg%xEx%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="5 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="999" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="errorLog"
+			fileName="logs/error.log" filePattern="logs/$${date:yyyy-MM-dd}/error-%d{yyyy-MM-dd.HH-mm-ss}.log">
+			<PatternLayout>
+				<Pattern>%d [%t]-[%c{1.}]-%p %m%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<SizeBasedTriggeringPolicy size="100 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="999" />
+		</RollingRandomAccessFile>
+		<RollingRandomAccessFile name="msg" fileName="msg/log.log"
+			filePattern="msg/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log">
+			<PatternLayout>
+				<Pattern>%msg%xEx%n</Pattern>
+			</PatternLayout>
+			<Policies>
+				<TimeBasedTriggeringPolicy />
+				<SizeBasedTriggeringPolicy size="1 MB" />
+			</Policies>
+			<DefaultRolloverStrategy max="999" />
+		</RollingRandomAccessFile>
+	</appenders>
+	<loggers>
+		<logger name="com.dap" additivity="false" level="DEBUG">
+			<AppenderRef ref="App" />
+		    <AppenderRef ref="errorLog" /> 
+			<AppenderRef ref="STDOUT" />
+		</logger>
+		
+		<logger name="com.ucloudlink.boot.queue.PresistEventHandler" additivity="false" level="INFO">
+			<AppenderRef ref="msg" /> 
+		</logger>
+		
+		<logger name="org.springframework" additivity="false" level="ERROR">
+			<AppenderRef ref="App" />
+		</logger>
+		<root level="ERROR">
+			<AppenderRef ref="App" />
+
+		</root>
+	</loggers>
+</configuration>
