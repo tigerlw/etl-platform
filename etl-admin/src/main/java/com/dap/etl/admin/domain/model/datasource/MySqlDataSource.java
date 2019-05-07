@@ -1,6 +1,8 @@
 package com.dap.etl.admin.domain.model.datasource;
 
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.dap.etl.admin.domain.inf.service.MySqlConnVO;
 import com.dap.etl.admin.domain.inf.service.MySqlConnection;
@@ -10,8 +12,9 @@ import com.dap.etl.admin.domain.inf.service.MySqlConnection;
  * @author liuwei1
  *
  */
-public class MySqlDataSource 
+public class MySqlDataSource implements DataSource
 {
+	private static Map<String,MySqlDataSource> dataSourceStore = new ConcurrentHashMap<String,MySqlDataSource>(128);
 	
 	private String id;
 	
@@ -81,6 +84,49 @@ public class MySqlDataSource
 		this.tables = connection.getTableList(connVO);
 		
 		return this.tables;
+	}
+	
+	/**
+	 * 构建dataSource
+	 * @return
+	 */
+	public boolean buildDataSource()
+	{
+		getTableList();
+		
+		dataSourceStore.put(this.id, this);
+		
+		return true;
+	}
+	
+	/**
+	 * 根据表名获取表定义
+	 * @param tableName
+	 * @return
+	 */
+	public TableSchemaVO getTableSchema(String tableName)
+	{
+		for(TableSchemaVO table : this.tables)
+		{
+			if(tableName.equals(table.getTableName()))
+			{
+				return table;
+			}
+		}
+		
+		return null;
+	}
+	
+	/**
+	 * 通过Id获取数据源
+	 * @param id
+	 * @return
+	 */
+	public static DataSource getDataSourceById(String id)
+	{
+		DataSource result = dataSourceStore.get(id);
+		
+		return result;
 	}
 
 	public String getIp() {
