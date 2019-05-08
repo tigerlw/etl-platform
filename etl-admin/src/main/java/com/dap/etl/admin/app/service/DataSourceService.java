@@ -55,5 +55,15 @@ public class DataSourceService {
 		
 		return result;
 	}
+	
+	public boolean buildDataSource(DataSourceVO dataSourceVO)
+	{
+		MySqlDataSource dataSource = new MySqlDataSource(dataSourceVO.getId(), dataSourceVO.getIp(),
+				dataSourceVO.getPort(), dataSourceVO.getDataBase(), dataSourceVO.getUserName(), dataSourceVO.getPwd(), conn);
+		
+		dataSource.buildDataSource();
+		
+		return true;
+	}
 
 }

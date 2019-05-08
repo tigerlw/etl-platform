@@ -31,4 +31,14 @@ public class DataSourceApiController
 		List<TableSchemaVO> result = dataSourceService.getTableSchema(dataSourceVO);
 		return result;
 	}
+	
+	
+	@RequestMapping(value = "/datasource/build" ,method = RequestMethod.POST)
+	public String buildDataSource(@RequestBody DataSourceVO dataSourceVO)
+	{
+		
+		dataSourceService.buildDataSource(dataSourceVO);
+		
+		return "success";
+	}
 }
