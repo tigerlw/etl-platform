@@ -10,6 +10,7 @@ import javax.xml.bind.Unmarshaller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import com.dap.etl.admin.app.vo.DataTaskVO;
 import com.dap.etl.admin.domain.model.datasource.ColumnSchemaVO;
@@ -18,7 +19,7 @@ import com.dap.etl.admin.inf.xml.model.Field;
 import com.dap.etl.admin.inf.xml.model.Transformation;
 
 
-
+@Component
 public class JaxbKettleTrans {
 	
 	
@@ -125,9 +126,15 @@ public class JaxbKettleTrans {
 		
 		
 		
-		return null;
+		return targetPath;
 	}
 	
+	
+	/**
+	 * 根据数据源创建sql
+	 * @param taskDataSourceVO
+	 * @return
+	 */
 	public String buildSql(TaskDataSourceVO taskDataSourceVO)
 	{
 		String sql = null;

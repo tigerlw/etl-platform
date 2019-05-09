@@ -43,7 +43,7 @@ public class JobApiController {
 	
 	
 	@RequestMapping(value = "/runJob" ,method = RequestMethod.GET)
-	public String runJob(@RequestParam String jobId)
+	public String runJob(@RequestParam String jobId, @RequestParam String taskId)
 	{
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -66,9 +66,10 @@ public class JobApiController {
 		Map<String,Object> paramsMap = new HashMap<String,Object>(16);
 		
 		paramsMap.put("id", jobId);
+		paramsMap.put("executorParam", taskId);
 
 		ResponseEntity<String> response = restTemplate.postForEntity(
-				"http://127.0.0.1:8080/xxl-job-admin/jobinfo/trigger?id={id}", formEntity, String.class, paramsMap);
+				"http://127.0.0.1:8080/xxl-job-admin/jobinfo/trigger?id={id}&executorParam={executorParam}", formEntity, String.class, paramsMap);
 		
 
 		return response.getBody();

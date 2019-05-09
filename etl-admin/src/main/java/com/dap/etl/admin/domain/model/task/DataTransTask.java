@@ -14,9 +14,14 @@ public class DataTransTask {
 	
 	private String taskName;
 	
+	//源数据源
 	private TaskDataSourceVO OriginDataSource;
 	
+	//目标数据源
 	private TaskDataSourceVO ObjDataSource;
+	
+	//任务周期
+	private TaskCycleVOTest taskCycle;
 	
 	private static Map<String,DataTransTask> taskMapStore = new ConcurrentHashMap<String,DataTransTask>(128);
 	
@@ -91,6 +96,14 @@ public class DataTransTask {
 
 	public void setObjDataSource(TaskDataSourceVO objDataSource) {
 		ObjDataSource = objDataSource;
+	}
+
+	public TaskCycleVOTest getTaskCycle() {
+		return taskCycle;
+	}
+
+	public void setTaskCycle(TaskCycleVOTest taskCycle) {
+		this.taskCycle = taskCycle;
 	}
 	
 	
