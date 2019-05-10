@@ -10,8 +10,8 @@
 		<gmavenVersion>1.4</gmavenVersion>
 		<gmavenProviderSelection>2.0</gmavenProviderSelection>
 		<groovyVersion>2.0.0</groovyVersion>
-		<serenity.version>2.0.13</serenity.version>
-		<serenity.maven.version>2.0.13</serenity.maven.version>
+		<serenity.version>2.0.48</serenity.version>
+		<serenity.maven.version>2.0.48</serenity.maven.version>
 	</properties>
 
 	<dependencyManagement>
@@ -98,6 +98,7 @@
 			<artifactId>serenity-core</artifactId>
 			<version>${serenity.version}</version>
 			<scope>test</scope>
+
 		</dependency>
 
 		<dependency>
@@ -124,14 +125,34 @@
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
-			<version>3.9.1</version>
+			<version>3.141.59</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-api</artifactId>
-			<version>3.9.1</version>
+			<version>3.141.59</version>
 			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>3.141.59</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-firefox-driver</artifactId>
+			<version>3.141.59</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.31</version>
 		</dependency>
 
 		<dependency>
@@ -155,12 +176,12 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -231,6 +252,8 @@
 					</execution>
 				</executions>
 			</plugin>
+
+		
 
 
 		</plugins>

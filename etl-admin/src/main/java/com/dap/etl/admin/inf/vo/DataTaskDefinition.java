@@ -14,6 +14,11 @@ public class DataTaskDefinition {
 	private String objId;
 	private String objTable;
 	
+	private Long startTime;
+	private Long endTime;
+	private String cycle;
+	private Integer value;
+	
 	public String getTaskId() {
 		return taskId;
 	}
@@ -49,6 +54,30 @@ public class DataTaskDefinition {
 	}
 	public void setObjTable(String objTable) {
 		this.objTable = objTable;
+	}
+	public Long getStartTime() {
+		return startTime;
+	}
+	public void setStartTime(Long startTime) {
+		this.startTime = startTime;
+	}
+	public Long getEndTime() {
+		return endTime;
+	}
+	public void setEndTime(Long endTime) {
+		this.endTime = endTime;
+	}
+	public String getCycle() {
+		return cycle;
+	}
+	public void setCycle(String cycle) {
+		this.cycle = cycle;
+	}
+	public Integer getValue() {
+		return value;
+	}
+	public void setValue(Integer value) {
+		this.value = value;
 	}
 	
 	

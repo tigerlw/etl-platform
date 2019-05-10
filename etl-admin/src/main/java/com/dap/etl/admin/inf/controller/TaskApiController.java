@@ -38,6 +38,9 @@ public class TaskApiController {
 				dataTaskDefinition.getOriginId(), dataTaskDefinition.getOrgTable(), dataTaskDefinition.getObjId(),
 				dataTaskDefinition.getObjTable());
 		
+	    result = dataTaskService.defineTaskCycle(dataTaskDefinition.getTaskId(), dataTaskDefinition.getStartTime(),
+				dataTaskDefinition.getEndTime(), dataTaskDefinition.getCycle(), dataTaskDefinition.getValue());
+		
 		
 		return result;
 	}

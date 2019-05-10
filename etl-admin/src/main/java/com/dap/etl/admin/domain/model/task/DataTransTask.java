@@ -3,6 +3,8 @@ package com.dap.etl.admin.domain.model.task;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.dap.etl.admin.domain.model.task.TaskCycleVO.TaskCycleType;
+
 /**
  * 数据任务实体
  * @author liuwei1
@@ -21,7 +23,7 @@ public class DataTransTask {
 	private TaskDataSourceVO ObjDataSource;
 	
 	//任务周期
-	private TaskCycleVOTest taskCycle;
+	private TaskCycleVO taskCycle;
 	
 	private static Map<String,DataTransTask> taskMapStore = new ConcurrentHashMap<String,DataTransTask>(128);
 	
@@ -47,6 +49,21 @@ public class DataTransTask {
 		
 		taskMapStore.put(taskId, this);
 		
+		return true;
+	}
+	
+	/**
+	 * 定义任务周期
+	 * @param startTime
+	 * @param endTime
+	 * @param type
+	 * @param value
+	 * @return
+	 */
+	public boolean defineTaskCycle(long startTime,long endTime,String type,int value)
+	{	
+		TaskCycleVO cycle = new TaskCycleVO(startTime,endTime,type,value);
+		this.taskCycle = cycle;
 		return true;
 	}
 	
@@ -98,11 +115,11 @@ public class DataTransTask {
 		ObjDataSource = objDataSource;
 	}
 
-	public TaskCycleVOTest getTaskCycle() {
+	public TaskCycleVO getTaskCycle() {
 		return taskCycle;
 	}
 
-	public void setTaskCycle(TaskCycleVOTest taskCycle) {
+	public void setTaskCycle(TaskCycleVO taskCycle) {
 		this.taskCycle = taskCycle;
 	}
 	

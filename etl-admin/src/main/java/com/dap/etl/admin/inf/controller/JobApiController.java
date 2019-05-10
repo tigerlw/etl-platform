@@ -27,11 +27,15 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
+
+import com.dap.etl.admin.inf.xxljob.vo.XxlJobInfo;
+import com.alibaba.fastjson.JSON;
 
 @RestController
 public class JobApiController {
@@ -99,11 +103,44 @@ public class JobApiController {
 			cookie = cookies.get(0);
 		}
 		
-		logger.info(cookies.get(0));
+		logger.info(cookie);
 		
 		
 		return "success";
 	}
+	
+	@RequestMapping(value = "/createjob" ,method = RequestMethod.POST)
+	public String createJob(@RequestBody XxlJobInfo jobInfo)
+	{
+		RestTemplate restTemplate = new RestTemplate();
+
+		HttpHeaders headers = new HttpHeaders();
+		MediaType type = MediaType.parseMediaType("application/json; charset=UTF-8");
+		headers.setContentType(type);
+		headers.add("Accept", MediaType.APPLICATION_JSON.toString());
+
+		List<String> cookies = new ArrayList<>();
+		// cookies.add("XXL_JOB_LOGIN_IDENTITY=" +
+		// "6333303830376536353837616465323835626137616465396638383162336437");
+		cookies.add(cookie);
+		headers.put(HttpHeaders.COOKIE, cookies);
+
+		String params = JSON.toJSONString(jobInfo);
+
+		HttpEntity<String> formEntity = new HttpEntity<String>(params, headers);
+
+		Map<String, Object> paramsMap = new HashMap<String, Object>(16);
+
+		
+
+		ResponseEntity<String> response = restTemplate.postForEntity(
+				"http://127.0.0.1:8080/xxl-job-admin/jobinfo/add", formEntity,
+				String.class, paramsMap);
+		
+		return "success";
+	}
+	
+	
 	
 	@RequestMapping(value="/doDownload",method = RequestMethod.GET)
 	public ResponseEntity<byte[]> doDownLoad(HttpServletRequest request)

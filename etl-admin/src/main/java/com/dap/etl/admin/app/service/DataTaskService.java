@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.dap.etl.admin.app.vo.DataTaskVO;
 import com.dap.etl.admin.domain.model.task.DataTransTask;
+import com.dap.etl.admin.domain.model.task.TaskCycleVO.TaskCycleType;
 
 /**
  * 数据任务应用服务层
@@ -30,13 +31,18 @@ public class DataTaskService {
 
 		dataTask.bulidDataTransTask(taskId, taskName, originId, orgTable, objId, objTable);
 		
-		DataTaskVO result = new DataTaskVO();
-		
-		result.setTaskId(dataTask.getTaskId());
-		result.setTaskName(dataTask.getTaskName());
-		result.setOriginDataSource(dataTask.getOriginDataSource());
-		result.setObjDataSource(dataTask.getObjDataSource());
+		DataTaskVO result = transformToVO(dataTask);
 
+		return result;
+	}
+	
+	public DataTaskVO defineTaskCycle(String taskId,long startTime,long endTime,String type,int value)
+	{
+		DataTransTask dataTask = DataTransTask.getDataTransTask(taskId);
+		
+		dataTask.defineTaskCycle(startTime, endTime, type, value);
+		
+		DataTaskVO result = transformToVO(dataTask);
 		return result;
 	}
 	
@@ -47,16 +53,31 @@ public class DataTaskService {
 	 */
 	public DataTaskVO getDataTask(String taskId)
 	{
-		DataTaskVO result = new DataTaskVO();
+
 		DataTransTask dataTask = DataTransTask.getDataTransTask(taskId);
 		
-		result.setTaskId(dataTask.getTaskId());
-		result.setTaskName(dataTask.getTaskName());
-		result.setOriginDataSource(dataTask.getOriginDataSource());
-		result.setObjDataSource(dataTask.getObjDataSource());
-
+		DataTaskVO result = transformToVO(dataTask);
+		
 		return result;
 		
+	}
+	
+	
+	/**
+	 * 数据任务实体转换为值对象
+	 * @param dataTask
+	 * @return
+	 */
+	private DataTaskVO transformToVO(DataTransTask dataTask)
+	{
+		DataTaskVO vo = new DataTaskVO();
+		vo.setTaskId(dataTask.getTaskId());
+		vo.setTaskName(dataTask.getTaskName());
+		vo.setOriginDataSource(dataTask.getOriginDataSource());
+		vo.setObjDataSource(dataTask.getObjDataSource());
+		vo.setTaskCycle(dataTask.getTaskCycle());
+		
+		return vo;
 	}
 
 }

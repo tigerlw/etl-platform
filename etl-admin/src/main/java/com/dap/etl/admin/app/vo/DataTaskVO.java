@@ -1,5 +1,6 @@
 package com.dap.etl.admin.app.vo;
 
+import com.dap.etl.admin.domain.model.task.TaskCycleVO;
 import com.dap.etl.admin.domain.model.task.TaskDataSourceVO;
 
 /**
@@ -16,6 +17,8 @@ public class DataTaskVO {
 	private TaskDataSourceVO OriginDataSource;
 
 	private TaskDataSourceVO ObjDataSource;
+	
+	private TaskCycleVO taskCycle; 
 	
 
 	public String getTaskId() {
@@ -48,6 +51,14 @@ public class DataTaskVO {
 
 	public void setObjDataSource(TaskDataSourceVO objDataSource) {
 		ObjDataSource = objDataSource;
+	}
+
+	public TaskCycleVO getTaskCycle() {
+		return taskCycle;
+	}
+
+	public void setTaskCycle(TaskCycleVO taskCycle) {
+		this.taskCycle = taskCycle;
 	}
 
 }

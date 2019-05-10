@@ -11,19 +11,29 @@ import java.time.ZoneOffset;
  */
 public class TaskCycleVO {
 	
-	//任务开始时间
+	/**
+	 * 任务开始时间
+	 */
 	private Long startTime;
 	
-	//任务结束时间
+	/**
+	 * 任务结束时间
+	 */
 	private Long endTime;
 	
-	//任务周期类型
+	/**
+	 * 任务周期类型
+	 */
 	private TaskCycleType cycleType;
 	
-	//任务周期值
-	private int value;
+	/**
+	 * 任务周期值
+	 */
+	private Integer value;
 	
-	//任务当前时间
+	/**
+	 * 任务当前时间
+	 */
 	private Long currentTime;
 	
 	public TaskCycleVO(Long startTime,Long endTime,TaskCycleType cycleType,int value)
@@ -44,12 +54,28 @@ public class TaskCycleVO {
 		this.setCurrentTime(currentTime);
 	}
 	
+	public TaskCycleVO(Long startTime,Long endTime,String cycle,int value)
+	{
+		TaskCycleType cycleType = TaskCycleType.createCycleType(cycle);
+		
+		this.setStartTime(startTime);
+		this.setEndTime(endTime);
+		this.cycleType = cycleType;
+		this.value = value;
+		this.setCurrentTime(startTime);
+	}
+	
+
+
 	public TaskCycleVO()
 	{
 		
 	}
 	
-	
+	/**
+	 * 周期递增
+	 * @return
+	 */
 	public TaskCycleVO increaseCycle()
 	{
 		Long currentTime = increaseTime(this);
@@ -60,7 +86,11 @@ public class TaskCycleVO {
 		return taskCycle;
 	}
 	
-	
+	/**
+	 * 当前周期增加函数
+	 * @param taskCycle
+	 * @return
+	 */
 	public Long increaseTime(TaskCycleVO taskCycle)
 	{
 		Long result = 0L;
@@ -73,7 +103,13 @@ public class TaskCycleVO {
 	}
 	
 	
-
+	@Override
+    public String toString()
+	{
+		String result = String.format("startTime:%d , endTime:%d , cyletype:%s , cyclevalue:%d", this.startTime,
+				this.endTime, this.cycleType, this.value);
+		return result;
+	}
 	
 	
 	
@@ -86,11 +122,11 @@ public class TaskCycleVO {
 	}
 
 
-	public int getValue() {
+	public Integer getValue() {
 		return value;
 	}
 
-	public void setValue(int value) {
+	public void setValue(Integer value) {
 		this.value = value;
 	}
 
@@ -140,36 +176,48 @@ public class TaskCycleVO {
 	 */
 	public static enum TaskCycleType
 	{
+		/**
+		 * 分钟周期
+		 */
 		MINUTE("minute", "0") {
 
 			@Override
 			Long increase(Long currentTime,int value) {
 				// TODO Auto-generated method stub
 				
-				Long result = currentTime + value*60*1000;
+				Long result = currentTime + value*60*1000L;
 				
 				return result;
 			}
 		},
+		/**
+		 * 小时周期
+		 */
 		HOUR("hour", "1") {
 			@Override
 			Long increase(Long currentTime,int value) {
 				// TODO Auto-generated method stub
 				
-				Long result = currentTime + value*3600*1000;
+				Long result = currentTime + value*3600*1000L;
 				
 				return result;
 			}
 		},
+		/**
+		 * 天周期
+		 */
 		DAY("day", "2") {
 			@Override
 			Long increase(Long currentTime,int value) {
 				// TODO Auto-generated method stub
-				Long result = currentTime + value*24*3600*1000;
+				Long result = currentTime + value*24*3600*1000L;
 				
 				return result;
 			}
 		},
+		/**
+		 * 月周期
+		 */
 		MONTH("month", "3") {
 			@Override
 			Long increase(Long currentTime,int value) {
@@ -212,6 +260,37 @@ public class TaskCycleVO {
 		 * @return
 		 */
 		abstract Long increase(Long currentTime,int value);
+		
+		public static TaskCycleType createCycleType(String type)
+		{
+			TaskCycleType result = null;
+			
+			switch(type)
+			{
+				case "minute":
+					result = MINUTE;
+					break;
+				case "hour":
+					result = HOUR;
+					break;
+				case "day":
+					result = DAY;
+					break;
+				case "month":
+					result = MONTH;
+					break;
+				default:
+					result = null;
+			}
+			
+			return result;
+		}
+		
+		@Override
+		public String toString()
+		{
+			return cycleName;
+		}
 		
 		
 		
