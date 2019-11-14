@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dap.etl.platform.admin.inf.repo.mysql.dao.CustDao">
+    <resultMap id="custMap" type="com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO">
+        <result property="id" column="id"/>
+        <result property="userName" column="username"/>
+        <result property="age" column="age"/>
+    </resultMap>
+	
+	<select id="findAll" parameterType="java.util.Map" resultMap="custMap">
+	    select id,username,age from customer
+	</select>
+</mapper>
