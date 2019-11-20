@@ -7,5 +7,7 @@ import com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO;
 public interface CustDao {
 	
 	public List<CustDTO> findAll();
+	
+	public List<CustDTO> findByName(CustDTO custDTO);
 
 }

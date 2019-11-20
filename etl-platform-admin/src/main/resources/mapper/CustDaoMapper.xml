@@ -7,7 +7,11 @@
         <result property="age" column="age"/>
     </resultMap>
 	
-	<select id="findAll" parameterType="java.util.Map" resultMap="custMap">
+	<select id="findAll" parameterType="com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO" resultMap="custMap">
 	    select id,username,age from customer
+	</select>
+	
+	<select id="findByName" parameterType="com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO" resultMap="custMap">
+	    select id,username,age from customer where username=#{userName}
 	</select>
 </mapper>
