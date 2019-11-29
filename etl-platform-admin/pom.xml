@@ -10,8 +10,8 @@
 		<gmavenVersion>1.4</gmavenVersion>
 		<gmavenProviderSelection>2.0</gmavenProviderSelection>
 		<groovyVersion>2.0.0</groovyVersion>
-		<serenity.version>2.0.81</serenity.version>
-		<serenity.maven.version>2.0.81</serenity.maven.version>
+		<serenity.version>2.0.48</serenity.version>
+		<serenity.maven.version>2.0.48</serenity.maven.version>
 	</properties>
 
 	<dependencyManagement>
