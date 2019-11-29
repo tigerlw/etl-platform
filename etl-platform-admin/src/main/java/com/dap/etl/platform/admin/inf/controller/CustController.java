@@ -7,11 +7,15 @@ import java.util.UUID;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -36,6 +40,9 @@ public class CustController {
 	
 	@Autowired
 	private StringRedisTemplate stringRedisTemplate;
+	
+	@Autowired
+	private MongoTemplate mongoTemplate;
 	
 	@RequestMapping(value = "/getCustAll", method = RequestMethod.POST)
 	public PageInfo<CustDTO> getCustAll()
@@ -63,22 +70,59 @@ public class CustController {
 	{
 		String result = stringRedisTemplate.opsForValue().get(key);
 		
-		stringRedisTemplate.opsForValue().set("kkk", "ggg");
+		/*stringRedisTemplate.opsForValue().set("kkk", "ggg");
 		
 		UserDomain userDomain = new UserDomain();
 		userDomain.setUserName("qqtt");
 		userDomain.setAge(20);
 		
 		redisTemplate.opsForValue().set(userDomain.getUserName(), userDomain);
-		UserDomain userR = (UserDomain) redisTemplate.opsForValue().get("qqtt");
+		UserDomain userR = (UserDomain) redisTemplate.opsForValue().get("qqtt");*/
 		
-		return userR.getUserName();
+		return result;
+	}
+	
+	
+	@RequestMapping(value = "/setRedisKey", method = RequestMethod.POST)
+	public String setRedisKey(@RequestParam String key, @RequestParam String value)
+	{
+		stringRedisTemplate.opsForValue().set(key, value);
+		
+		/*stringRedisTemplate.opsForValue().set("kkk", "ggg");
+		
+		UserDomain userDomain = new UserDomain();
+		userDomain.setUserName("qqtt");
+		userDomain.setAge(20);
+		
+		redisTemplate.opsForValue().set(userDomain.getUserName(), userDomain);
+		UserDomain userR = (UserDomain) redisTemplate.opsForValue().get("qqtt");*/
+		
+		return "success";
+	}
+	
+	@RequestMapping(value = "/delRedisKey", method = RequestMethod.POST)
+	public String setRedisKey(@RequestParam String key)
+	{
+		stringRedisTemplate.delete(key);
+		
+		/*stringRedisTemplate.opsForValue().set("kkk", "ggg");
+		
+		UserDomain userDomain = new UserDomain();
+		userDomain.setUserName("qqtt");
+		userDomain.setAge(20);
+		
+		redisTemplate.opsForValue().set(userDomain.getUserName(), userDomain);
+		UserDomain userR = (UserDomain) redisTemplate.opsForValue().get("qqtt");*/
+		
+		return "success";
 	}
 	
 	
 	@RequestMapping(value = "/testRedisPerf", method = RequestMethod.POST)
 	public String testRedisPerf()
 	{
+		long wasteTime = System.currentTimeMillis();
+		
 		int seq = random.nextInt(100000000);
 		
 		logger.info("begin userName:"+seq);
@@ -93,10 +137,23 @@ public class CustController {
 		
 		UserDomain result = (UserDomain) redisTemplate.opsForValue().get(userName);
 		
-		logger.info("userName:"+result.getUserName());
+		wasteTime = System.currentTimeMillis() - wasteTime;
+		
+		logger.info("userName:"+result.getUserName()+";wastTime:"+wasteTime);
 		
 		
 		return "success";
+	}
+	
+	
+	@RequestMapping(value = "/findCustByName", method = RequestMethod.POST)
+	public String findCustByName(@RequestBody String name)
+	{
+		Query query=new Query(Criteria.where("userName").is(name));
+		
+		UserDomain user = mongoTemplate.findOne(query, UserDomain.class, "customer");
+		
+		return "user:"+user.getUserName()+";age:"+user.getAge();
 	}
 	
 	static class UserDomain{
