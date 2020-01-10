@@ -1,8 +1,11 @@
 package com.dap.etl.platform.admin.inf.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -64,6 +67,76 @@ public class CustController {
 		
 		return result;
 	}
+	
+	@RequestMapping(value = "/insertCust", method = RequestMethod.POST)
+	public String insertCust(@RequestBody CustDTO cust)
+	{
+		custDao.insertCust(cust);
+		return "success";
+	}
+	
+	
+	@RequestMapping(value = "/insertPerfMysql", method = RequestMethod.POST)
+	public String insertPerfMysql(@RequestParam int count)
+	{
+		
+		Executor executor = Executors.newFixedThreadPool(20);
+		
+		for (int i = 0; i < count; i++) 
+		{
+			
+			executor.execute(new Runnable(){
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					List<CustDTO> custs = new ArrayList<CustDTO>();
+					
+					for (int i = 0; i < 100; i++) 
+					{
+
+						CustDTO cust = new CustDTO();
+						cust.setId(Long.toString(System.currentTimeMillis()));
+						cust.setUserName("ttt");
+						cust.setAge(22);
+						custs.add(cust);
+					}
+					
+					custDao.insertCustBatch(custs);
+				}
+				
+			});
+
+		}
+		
+		
+		
+		return "success";
+		
+	}
+	
+	
+	@RequestMapping(value = "/insertCustBatch", method = RequestMethod.POST)
+	public String insertCustBatch(@RequestParam int count)
+	{
+		List<CustDTO> custs = new ArrayList<CustDTO>();
+		
+		for (int i = 0; i < count; i++) 
+		{
+			CustDTO cust =new CustDTO();
+			cust.setId(Long.toString(System.currentTimeMillis()));
+			cust.setUserName("ttt");
+			cust.setAge(22);
+			
+			custs.add(cust);
+		}
+		
+		custDao.insertCustBatch(custs);
+		
+		return "success";
+	}
+	
+	
 	
 	@RequestMapping(value = "/getRedisKey", method = RequestMethod.POST)
 	public String getRedisKey(@RequestBody String key)
@@ -151,10 +224,52 @@ public class CustController {
 	{
 		Query query=new Query(Criteria.where("userName").is(name));
 		
-		UserDomain user = mongoTemplate.findOne(query, UserDomain.class, "customer");
+		UserDomain user = mongoTemplate.findOne(query, UserDomain.class, "UserDomain");
 		
 		return "user:"+user.getUserName()+";age:"+user.getAge();
 	}
+	
+	
+	
+	@RequestMapping(value = "/insertCustToMongo", method = RequestMethod.POST)
+	public String insertCustToMongo(@RequestParam String name)
+	{
+		UserDomain user = new UserDomain();
+		user.setUserName(name);
+		user.setAge(20);
+		
+		mongoTemplate.save(user, "UserDomain");
+		
+		return "success";
+	}
+	
+	
+	@RequestMapping(value = "/mongoPerfTest", method = RequestMethod.POST)
+	public String mongoPerfTest(@RequestParam int count)
+	{
+		Executor executor = Executors.newFixedThreadPool(20);
+		
+		for (int i = 0; i < count; i++)
+		{
+			executor.execute(new Runnable(){
+
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					UserDomain user = new UserDomain();
+					user.setUserName(Long.toString(System.currentTimeMillis()));
+					user.setAge(20);
+					
+					mongoTemplate.save(user, "UserDomain");
+				}
+				
+			});
+		}
+		
+		return "success";
+	}
+	
+	
 	
 	static class UserDomain{
 		

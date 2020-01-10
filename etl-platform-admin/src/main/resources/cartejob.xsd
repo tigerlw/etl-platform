@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="NewDataSet" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+  <xs:element name="result">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="lines_input" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_output" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_read" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_written" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_updated" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_rejected" type="xs:string" minOccurs="0" />
+        <xs:element name="lines_deleted" type="xs:string" minOccurs="0" />
+        <xs:element name="nr_errors" type="xs:string" minOccurs="0" />
+        <xs:element name="nr_files_retrieved" type="xs:string" minOccurs="0" />
+        <xs:element name="entry_nr" type="xs:string" minOccurs="0" />
+        <xs:element name="exit_status" type="xs:string" minOccurs="0" />
+        <xs:element name="is_stopped" type="xs:string" minOccurs="0" />
+        <xs:element name="log_channel_id" type="xs:string" minOccurs="0" />
+        <xs:element name="log_text" type="xs:string" minOccurs="0" />
+        <xs:element name="elapsedTimeMillis" type="xs:string" minOccurs="0" />
+        <xs:element name="executionId" type="xs:string" minOccurs="0" />
+        <xs:element ref="result" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="jobstatus">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="jobname" type="xs:string" minOccurs="0" />
+        <xs:element name="id" type="xs:string" minOccurs="0" />
+        <xs:element name="status_desc" type="xs:string" minOccurs="0" />
+        <xs:element name="error_desc" type="xs:string" minOccurs="0" />
+        <xs:element name="log_date" type="xs:string" minOccurs="0" />
+        <xs:element name="logging_string" type="xs:string" minOccurs="0" />
+        <xs:element name="first_log_line_nr" type="xs:string" minOccurs="0" />
+        <xs:element name="last_log_line_nr" type="xs:string" minOccurs="0" />
+        <xs:element ref="result" minOccurs="0" maxOccurs="unbounded" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="NewDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="result" />
+        <xs:element ref="jobstatus" />
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

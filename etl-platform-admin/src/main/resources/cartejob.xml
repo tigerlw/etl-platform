@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobstatus>
+  <jobname>test_properties</jobname>
+  <id>b4dc91bc-5da8-41eb-a60e-8350ab4047c7</id>
+  <status_desc>Finished</status_desc>
+  <error_desc/>
+  <log_date>2019/12/25 09:34:51.247</log_date>
+  <logging_string>&lt;![CDATA[H4sIAAAAAAAAADMyMLTUNzTSNzJVMLC0MjaxMjVU0FUoSS0uiS8oyi9ILSrJTC0GigSXJBaVKOSn
+KWTlJymkVqQml5Zk5udxGZGiPTMvXSE1r6SoUiH6xbp9z/eue9o/42V7fyzZpnglliUGJxdlFpQQ
+b4ZbZl5mcUZqCsQjGOYoaBSlFpfmlNhGlxSVpsZqUmQuii/JNtkLOcQV0qD2cAEALPIF7boBAAA=
+]]&gt;</logging_string>
+  <first_log_line_nr>0</first_log_line_nr>
+  <last_log_line_nr>679</last_log_line_nr>
+<result><lines_input>0</lines_input>
+<lines_output>0</lines_output>
+<lines_read>0</lines_read>
+<lines_written>0</lines_written>
+<lines_updated>0</lines_updated>
+<lines_rejected>0</lines_rejected>
+<lines_deleted>0</lines_deleted>
+<nr_errors>0</nr_errors>
+<nr_files_retrieved>0</nr_files_retrieved>
+<entry_nr>0</entry_nr>
+<result>Y</result>
+<exit_status>0</exit_status>
+<is_stopped>N</is_stopped>
+<log_channel_id/>
+<log_text>null</log_text>
+<elapsedTimeMillis>0</elapsedTimeMillis>
+<executionId/>
+</result></jobstatus>

@@ -14,4 +14,16 @@
 	<select id="findByName" parameterType="com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO" resultMap="custMap">
 	    select id,username,age from customer where username=#{userName}
 	</select>
+	
+	<insert id="insertCust" parameterType="com.dap.etl.platform.admin.inf.repo.mysql.dto.CustDTO">
+	    insert into customer(id,username,age) value (#{id},#{userName},#{age})
+	</insert>
+	
+	<insert id="insertCustBatch" parameterType="java.util.List">
+	   insert into customer(id,username,age) values
+	   <foreach collection ="list" item="cust" index= "index" separator =",">
+	     (#{cust.id},#{cust.userName},#{cust.age})
+	   </foreach>
+	
+	</insert>
 </mapper>
